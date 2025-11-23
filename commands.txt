@@ -1,0 +1,45 @@
+
+curl -X POST http://localhost:8080/users/register \
+-H "Content-Type: application/json" \
+-d '{"email":"a","password":"pass", "role":"CUSTOMER"}'
+
+curl -X POST http://localhost:8080/users/register \
+-H "Content-Type: application/json" \
+-d '{"email":"b","password":"pass", "role":"CUSTOMER"}'
+
+curl -X POST http://localhost:8080/users/login \
+-H "Content-Type: application/json" \
+-d '{"email":"b","password":"pass"}'
+
+curl -X DELETE http://localhost:8080/users/b \
+-H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhQGIuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzYzODQ0MDYxLCJleHAiOjE3NjM5MzA0NjF9.68k1JoPhy0JGj93HWuvF-LIH-NJL7cqA92JysSAp7QmuZ_eACb8UqeiZx1EloQDG"
+
+curl -X GET http://localhost:8080/users?role=customer \
+-H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhQGIuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzYzODQ0MDYxLCJleHAiOjE3NjM5MzA0NjF9.68k1JoPhy0JGj93HWuvF-LIH-NJL7cqA92JysSAp7QmuZ_eACb8UqeiZx1EloQDG"
+
+curl -X PUT http://localhost:8080/users/me \
+ -H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhIiwicm9sZSI6IkNVU1RPTUVSIiwiaWF0IjoxNzYzOTAyMTUzLCJleHAiOjE3NjM5ODg1NTN9.-QSIEPJ_oE2nSmuIaE_awzywhfh6eq9jYTcwtc6w0saUAFBBHMnluiiazCq4HA2h" \
+ -H "Content-Type: application/json" \
+ -d '{
+       "firstName": "Joze",
+       "lastName": "Priimek",
+       "address": "123 Dunajska",
+       "latitude": 13,
+       "longitude": 37
+     }'
+
+ curl -X PUT http://localhost:8080/users/admin/update?email=b \
+  -H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhQGIuY29tIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzYzODQ0MDYxLCJleHAiOjE3NjM5MzA0NjF9.68k1JoPhy0JGj93HWuvF-LIH-NJL7cqA92JysSAp7QmuZ_eACb8UqeiZx1EloQDG" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "firstName": "Dunja",
+        "lastName": "Priimek",
+        "address": "456 Dunajska",
+        "latitude": 69,
+        "longitude": 420
+      }'
+
+curl -X GET http://localhost:8080/users/me \
+  -H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJiIiwicm9sZSI6IkNVU1RPTUVSIiwiaWF0IjoxNzYzOTA0NjMzLCJleHAiOjE3NjM5OTEwMzN9.Wn7f0WPAE9ausChlJLElfGZKokKhlHO61MyNpqdKw411zHyGM1ob1qcwch_W3z9A"
+
+
