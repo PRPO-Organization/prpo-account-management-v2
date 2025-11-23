@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:16
+    container_name: account-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: accountdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  account-service:
+    build: .
+    container_name: account-service
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/accountdb
+      DB_USER: admin
+      DB_PASSWORD: pass
+      JWT_SECRET: 53V3NPR41535T0L0RDJUR1CL0NGM4YHER31GNF0RH15RUL3W45PR0M153D
+
+volumes:
+  pgdata:

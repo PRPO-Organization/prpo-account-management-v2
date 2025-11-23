@@ -7,6 +7,10 @@ curl -X POST http://localhost:8080/users/register \
 -H "Content-Type: application/json" \
 -d '{"email":"b","password":"pass", "role":"CUSTOMER"}'
 
+curl -X POST http://localhost:8080/users/register \
+-H "Content-Type: application/json" \
+-d '{"email":"admin@test.com","password":"pass", "role":"ADMIN"}'
+
 curl -X POST http://localhost:8080/users/login \
 -H "Content-Type: application/json" \
 -d '{"email":"b","password":"pass"}'

@@ -3,7 +3,7 @@ package com.skupina1.accountmanagement.config;
 public class Config {
     public static String getDBUrl() {
         return System.getenv().getOrDefault("DB_URL",
-                "jdbc:postgresql://localhost:5432/accountdb");
+                "jdbc:postgresql://db:5432/accountdb");
     }
 
     public static String getDBUser() {
