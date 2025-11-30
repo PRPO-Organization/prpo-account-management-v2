@@ -76,7 +76,13 @@ public class UserResource {
     @RolesAllowed("ADMIN")
     @Path("/{id}")
     public Response getUserById(@PathParam("id") long id){
-        return Response.ok().build();
+        User u = service.findUserById(id);
+        if(u == null)
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"Message\":\"Specified ID does not exist\"}")
+                    .build();
+
+        return Response.ok(u).build();
     }
 
     @PUT

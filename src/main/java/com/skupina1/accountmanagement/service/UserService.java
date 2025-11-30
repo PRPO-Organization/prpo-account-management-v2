@@ -37,6 +37,8 @@ public class UserService {
 
     public User findUserByEmail(String email) { return dao.findByEmail(email); }
 
+    public User findUserById(long id) { return dao.findById(id); }
+
     public boolean updateUser(String email, UpdateUserRequest request){
         User existing = dao.findByEmail(email);
         if(existing == null)
@@ -48,8 +50,6 @@ public class UserService {
         if(request.firstName != null) { existing.setFirstName(request.firstName); }
         if(request.lastName != null) { existing.setLastName(request.lastName); }
         if(request.address != null) { existing.setAddress(request.address); }
-        if(request.latitude != null && request.longitude != null)
-            existing.setLocation(new Location(request.latitude, request.longitude));
 
         return dao.updateUser(existing);
     }

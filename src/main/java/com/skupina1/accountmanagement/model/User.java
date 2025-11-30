@@ -7,11 +7,11 @@ enum Role{
 }
 
 public class User{
+    private long id;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
-    private Location location;
     private String address;
     private Role role;
 
@@ -23,8 +23,8 @@ public class User{
         this.setRole(role);
     }
 
+    public long getId() {return this.id;}
     public String getEmail() {return this.email;}
-    public Location getLocation() {return this.location;}
     public String getAddress() {return this.address;}
     public String getFirstName() {return this.firstName;}
     public String getLastName() {return this.lastName;}
@@ -40,11 +40,11 @@ public class User{
         return "CUSTOMER";
     }
 
+    public void setId(long id) {this.id = id;}
     public void setAddress(String address) {this.address = address;}
     public void setEmail(String email) {this.email = email;}
     public void setFirstName(String firstName) {this.firstName = firstName;}
     public void setLastName(String lastName) {this.lastName = lastName;}
-    public void setLocation(Location location) {this.location = location;}
     public void setPassword(String password) {this.password = password;}
     public void setRole(String role) {
         if(role.equals("ADMIN")){

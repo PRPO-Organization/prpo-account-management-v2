@@ -10,31 +10,30 @@ import java.util.List;
 public class UserDAO {
 
     public boolean Create(User user){
-        String sql = "INSERT INTO users (email, password, first_name, last_name, latitude, longitude, address, role) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (email, password, first_name, last_name, address, role) " +
+                "VALUES (?, ?, ?, ?, ?, ?) RETURNING id";
 
         try (Connection con = Database.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-            Location loc = user.getLocation();
             ps.setString(1, user.getEmail());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getFirstName());
             ps.setString(4, user.getLastName());
-            if(loc != null) {
-                ps.setLong(5, user.getLocation().getLatitude());
-                ps.setLong(6, user.getLocation().getLongitude());
-            }else{
-                ps.setLong(5, 0);
-                ps.setLong(6, 0);
+            ps.setString(5, user.getAddress());
+            ps.setString(6, user.getRole());
 
+            try(ResultSet rs = ps.executeQuery()){
+                if(rs.next()){  // should return id (i think)
+                    long id = rs.getLong("id");
+                    user.setId(id);
+                    return true;
+                }
             }
-            ps.setString(7, user.getAddress());
-            ps.setString(8, user.getRole());
 
-            ps.executeUpdate();
-            return true;
+            return false;
         }catch (SQLException e) {
+            System.out.println("SQL Create Error: " + e);
             return false;
         }
     }
@@ -50,24 +49,48 @@ public class UserDAO {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Location loc = new Location(
-                        rs.getLong("latitude"),
-                        rs.getLong("longitude")
-                );
 
                 User u = new User();
+                u.setId(rs.getLong("id"));
                 u.setRole((rs.getString("role")));
                 u.setEmail(rs.getString("email"));
                 u.setPassword(rs.getString("password"));
                 u.setFirstName(rs.getString("first_name"));
                 u.setLastName(rs.getString("last_name"));
                 u.setAddress(rs.getString("address"));
-                u.setLocation(loc);
 
                 return u;
             }
             return null;
         } catch (SQLException e) {
+            System.out.println("SQL Find Error: " + e);
+            return null;
+        }
+    }
+
+    public User findById(long id){
+        String sql = "SELECT * FROM users WHERE id = ?";
+
+        try (Connection conn = Database.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                User u = new User();
+                u.setId(rs.getLong("id"));
+                u.setEmail(rs.getString("email"));
+                u.setPassword(null);
+                u.setFirstName(rs.getString("first_name"));
+                u.setLastName(rs.getString("last_name"));
+                u.setAddress(rs.getString("address"));
+                u.setRole(rs.getString("role"));
+                return u;
+            }
+            return null;
+        }catch (SQLException e){
+            System.out.println("SQL FindID Error: " + e);
             return null;
         }
     }
@@ -89,19 +112,15 @@ public class UserDAO {
             List<User> users = new ArrayList<User>();
 
             while(rs.next()){
-                Location loc = new Location(
-                        rs.getLong("latitude"),
-                        rs.getLong("longitude")
-                );
 
                 User u = new User();
+                u.setId(rs.getLong("id"));
                 u.setRole((rs.getString("role")));
                 u.setEmail(rs.getString("email"));
                 u.setPassword(null);
                 u.setFirstName(rs.getString("first_name"));
                 u.setLastName(rs.getString("last_name"));
                 u.setAddress(rs.getString("address"));
-                u.setLocation(loc);
 
                 users.add(u);
             }
@@ -124,13 +143,14 @@ public class UserDAO {
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
+            System.out.println("SQL Error: " + e);
             return false;
         }
     }
 
     public boolean updateUser(User user){
-        String sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, " +
-                "latitude = ?, longitude = ? WHERE email = ?";
+        String sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, role = ? " +
+                "WHERE email = ?";
 
         try (Connection con = Database.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -138,14 +158,34 @@ public class UserDAO {
             ps.setString(1, user.getFirstName());
             ps.setString(2, user.getLastName());
             ps.setString(3, user.getAddress());
-            ps.setLong(4, user.getLocation().getLatitude());
-            ps.setLong(5, user.getLocation().getLongitude());
-            ps.setString(6, user.getEmail());
+            ps.setString(4, user.getRole());
+            ps.setString(5, user.getEmail());
 
             return ps.executeUpdate() >= 1;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("SQL Error: " + e);
+            return false;
+        }
+    }
+
+    public boolean updateUserById(User user) {
+        String sql = "UPDATE users SET first_name = ?, last_name = ?, address = ?, role = ? " +
+                "WHERE id = ?";
+
+        try (Connection con = Database.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getAddress());
+            ps.setString(4, user.getRole());
+            ps.setLong(5, user.getId());
+
+            return ps.executeUpdate() >= 1;
+
+        } catch (SQLException e) {
+            System.out.println("SQL Error: " + e);
             return false;
         }
     }
