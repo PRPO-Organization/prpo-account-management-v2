@@ -72,6 +72,13 @@ public class UserResource {
                 .build();
     }
 
+    @GET
+    @RolesAllowed("ADMIN")
+    @Path("/{id}")
+    public Response getUserById(@PathParam("id") long id){
+        return Response.ok().build();
+    }
+
     @PUT
     @Path("/me")
     public Response updateSelf(UpdateUserRequest req, @Context ContainerRequestContext ctx){
