@@ -1,6 +1,7 @@
 package com.skupina1.accountmanagement;
 
 import com.skupina1.accountmanagement.security.AuthFilter;
+import com.skupina1.accountmanagement.security.CorsFilter;
 import com.skupina1.accountmanagement.security.ForbiddenExceptionMapper;
 import com.skupina1.accountmanagement.security.JwtFilter;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -16,6 +17,7 @@ public class App {
         ResourceConfig rc = new ResourceConfig()
                 .packages("com.skupina1.accountmanagement.resource")
                 .register(AuthFilter.class)
+                .register(CorsFilter.class)
                 .register(RolesAllowedDynamicFeature.class)
                 .register(ForbiddenExceptionMapper.class)
                 .register(JsonBindingFeature.class);

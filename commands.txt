@@ -23,7 +23,7 @@ curl -X DELETE http://localhost:8080/users/b \
 -H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDUwNTE4NSwiZXhwIjoxNzY0NTkxNTg1fQ.y4BWeXKUb2VjQ52CWdHwS7YhjPleMAsI1rD7fwdFVmP6CFBeAMwCdmZAIFPML6km"
 
 curl -X GET http://localhost:8080/users?role=customer \
--H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDUwNjg5MiwiZXhwIjoxNzY0NTkzMjkyfQ.qbKuo96HwH2sKY6MUScoQugKNIZksYA9z6W9fw06HR-bzh2ECQOyffyzZazhwQ6L"
+-H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkB0ZXN0LmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDg0ODY3NCwiZXhwIjoxNzY0OTM1MDc0fQ.6aUXp9O3qj5hmmzeUntOWR7Uk6rrCUXfwQVYNNexptmPsnVr4dB23xUiylD21nHK"
 
 curl -X PUT http://localhost:8080/users/me \
  -H "Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhIiwicm9sZSI6IkNVU1RPTUVSIiwiaWF0IjoxNzYzOTAyMTUzLCJleHAiOjE3NjM5ODg1NTN9.-QSIEPJ_oE2nSmuIaE_awzywhfh6eq9jYTcwtc6w0saUAFBBHMnluiiazCq4HA2h" \
