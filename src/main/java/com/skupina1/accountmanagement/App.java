@@ -1,17 +1,17 @@
 package com.skupina1.accountmanagement;
 
-import com.skupina1.accountmanagement.security.AuthFilter;
-import com.skupina1.accountmanagement.security.CorsFilter;
-import com.skupina1.accountmanagement.security.ForbiddenExceptionMapper;
-import com.skupina1.accountmanagement.security.JwtFilter;
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.jsonb.JsonBindingFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
-import java.net.URI;
+import com.skupina1.accountmanagement.security.AuthFilter;
+import com.skupina1.accountmanagement.security.CorsFilter;
+import com.skupina1.accountmanagement.security.ForbiddenExceptionMapper;
 
+import jakarta.ws.rs.ApplicationPath;
+
+@ApplicationPath("api")
 public class App {
     public static void main(String[] args) throws Exception {
         ResourceConfig rc = new ResourceConfig()

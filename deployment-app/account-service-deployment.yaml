@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service
+  namespace: prpo-microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-service
+  template:
+    metadata:
+      labels:
+        app: account-service
+    spec:
+      containers:
+      - name: account-service
+        image: prporegistry.azurecr.io/account-service:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: users-db
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: account-db-secret
+              key: DB_USER
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: account-db-secret
+              key: DB_PASSWORD
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: account-db-secret
+              key: DB_NAME
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_SECRET
+        - name: DB_URL
+          valueFrom:
+            secretKeyRef:
+              name: account-db-secret
+              key: DB_URL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+  namespace: prpo-microservices
+spec:
+  type: ClusterIP
+  selector:
+    app: account-service
+  ports:
+    - port: 8080
+      targetPort: 8080
