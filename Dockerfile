@@ -6,7 +6,7 @@ COPY pom.xml .
 RUN mvn -q dependency:resolve
 
 COPY src ./src
-RUN mvn -q package -DskipTests
+RUN mvn clean -q package -DskipTests
 
 # ---------- RUN STAGE ----------
 FROM eclipse-temurin:17-jre
