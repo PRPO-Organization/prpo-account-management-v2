@@ -120,7 +120,7 @@ public class UserDAO {
                 u.setPassword(null);
                 u.setFirstName(rs.getString("first_name"));
                 u.setLastName(rs.getString("last_name"));
-                u.setAddress(rs.getString("address"));
+                u.setAddress(null);
 
                 users.add(u);
             }

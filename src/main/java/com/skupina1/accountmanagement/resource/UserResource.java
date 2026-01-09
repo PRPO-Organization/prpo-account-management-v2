@@ -61,7 +61,6 @@ public class UserResource {
     }
 
     @GET
-    @RolesAllowed("ADMIN")
     public Response getUsersByRole(@QueryParam("role") String role){
         List<User> users = service.getUsersByRole(role);
         if(!users.isEmpty())
@@ -73,7 +72,6 @@ public class UserResource {
     }
 
     @GET
-    @RolesAllowed("ADMIN")
     @Path("/{id}")
     public Response getUserById(@PathParam("id") long id){
         User u = service.findUserById(id);
@@ -117,7 +115,6 @@ public class UserResource {
 
     @PUT
     @Path("/admin/update")
-    @RolesAllowed("ADMIN")
     public Response updateUserByEmail(UpdateUserRequest req, @QueryParam("email") String email){
         if(email.isEmpty())
             return Response.status(Response.Status.BAD_REQUEST)
