@@ -1,5 +1,7 @@
 package com.skupina1.accountmanagement.config;
 
+
+
 public class Config {
     public static String getDBUrl() {
         return System.getenv().getOrDefault("DB_URL",
