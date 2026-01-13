@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: account-service
-        image: prporegistry.azurecr.io/account-service:0a40b394abe1c2268288ec297814bc57fcaada5c
+        image: prporegistry.azurecr.io/account-service:latest
         ports:
         - containerPort: 8080
         env:
