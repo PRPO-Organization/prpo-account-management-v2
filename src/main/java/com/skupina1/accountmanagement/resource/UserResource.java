@@ -135,4 +135,11 @@ public class UserResource {
                 .entity("{\"error\":\"User not found\"}")
                 .build();
     }
+
+    @GET
+    @Path("/health-check")
+    @Public
+    public Response healthCheck(){
+        return Response.ok("{\"message\":\"Account management works.\"}").build();
+    }
 }
